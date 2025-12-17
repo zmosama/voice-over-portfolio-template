@@ -1,6 +1,6 @@
 /* Force visibility of inputs in admin */
-div#content-main form input:not([type="hidden"]):not([type="submit"]):not([type="button"]),
-.flex input:not([type="hidden"]):not([type="submit"]):not([type="button"]),
+div#content-main form input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]),
+.flex input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]),
 input[type="password"],
 input[type="text"] {
     border-width: 1px !important;

@@ -104,7 +104,7 @@
             <div class="p-8 md:p-12">
                 <h2 class="text-2xl font-bold text-white mb-6">Script / Description</h2>
                 <div class="prose prose-invert prose-lg max-w-none text-gray-300">
-                    {{ item.description|linebreaks }}
+                    {{ item.description|safe }}
                 </div>
             </div>
 
