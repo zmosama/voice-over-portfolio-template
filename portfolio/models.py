@@ -7,6 +7,9 @@ class Category(models.TextChoices):
     DOCUMENTARY = 'documentary', 'Documentary'
     DUBBING = 'dubbing', 'Dubbing'
     BOOKS = 'books', 'Audio Books'
+    RADIO = 'radio', 'Radio'
+    IVR = 'ivr', 'IVR'
+    PODCAST = 'podcast', 'Podcast'
     OTHER = 'other', 'Other'
 
 class VoiceOver(models.Model):
