@@ -19,7 +19,7 @@ COPY . /app/
 RUN python manage.py collectstatic --noinput
 
 # Expose port (Internal)
-EXPOSE 8000
+EXPOSE 3115
 
 # Run gunicorn
-CMD ["gunicorn", "basma_project.wsgi:application", "--bind", "0.0.0.0:8000"]
+CMD ["gunicorn", "basma_project.wsgi:application", "--bind", "0.0.0.0:3115"]
