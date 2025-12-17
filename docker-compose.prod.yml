@@ -6,7 +6,7 @@ services:
     command: gunicorn basma_project.wsgi:application --bind 0.0.0.0:3115
     volumes:
       - ./media:/app/media
-      - ./db.sqlite3:/app/db.sqlite3
+      - ./db.prod.sqlite3:/app/db.sqlite3
     ports:
       - "3115:3115"
     expose:
