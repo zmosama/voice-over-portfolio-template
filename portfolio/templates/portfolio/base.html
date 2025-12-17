@@ -67,6 +67,33 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
     </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const arabicPattern = /[\u0600-\u06FF]/;
+
+            function autoRTL() {
+                // Select common text elements
+                const elements = document.querySelectorAll('h1, h2, h3, h4, h5, h6, p, a, span, .prose, li');
+
+                elements.forEach(el => {
+                    // Check direct text content only (approximate) or first few chars
+                    const text = el.textContent.trim();
+                    if (text.length > 0 && arabicPattern.test(text[0])) {
+                        el.setAttribute('dir', 'rtl');
+                        el.style.textAlign = 'right';
+                        el.style.fontFamily = "'SF Arabic', sans-serif";
+                        el.classList.add('rtl-active');
+                    }
+                });
+            }
+
+            autoRTL();
+
+            // Re-run on dynamic content changes (optional but good for htmx/ajax)
+            const observer = new MutationObserver(autoRTL);
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+    </script>
 </head>
 
 <body class="flex flex-col min-h-screen">
