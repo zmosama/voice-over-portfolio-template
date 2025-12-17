@@ -80,7 +80,7 @@
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neon-pink transition-colors">{{
                         item.title }}</h3>
-                    <p class="text-gray-400 text-sm line-clamp-2">{{ item.description|striptags }}</p>
+                    <p class="text-gray-400 text-sm line-clamp-2">{{ item.description|striptags|safe }}</p>
                 </div>
             </a>
             {% empty %}

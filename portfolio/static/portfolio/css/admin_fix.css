@@ -1,8 +1,11 @@
 /* Force visibility of inputs in admin */
-div#content-main form input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]),
-.flex input:not([type="hidden"]):not([type="submit"]):not([type="button"]):not([type="file"]):not([type="checkbox"]),
+/* Force visibility of inputs in admin */
+input[type="text"],
 input[type="password"],
-input[type="text"] {
+input[type="email"],
+input[type="url"],
+input[type="number"],
+.vTextField {
     border-width: 1px !important;
     border-style: solid !important;
     border-color: #cbd5e1 !important;
