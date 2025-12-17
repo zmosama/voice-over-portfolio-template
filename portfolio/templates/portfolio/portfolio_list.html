@@ -1,0 +1,90 @@
+{% extends 'portfolio/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="bg-navy-900 min-h-screen pt-12 pb-24 relative overflow-hidden">
+    <!-- Background Elements -->
+    <div class="absolute top-0 right-0 w-1/3 h-1/3 bg-neon-blue/5 rounded-full blur-3xl"></div>
+    <div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-neon-pink/5 rounded-full blur-3xl"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <!-- Header -->
+        <div class="text-center mb-16">
+            <h1 class="text-4xl md:text-5xl font-bold text-white mb-6">Complete <span
+                    class="text-neon-pink">Portfolio</span></h1>
+            <p class="text-xl text-gray-400 max-w-2xl mx-auto">Explore the full range of voice over projects, from
+                commercial ads to narrative storytelling.</p>
+        </div>
+
+        <!-- Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for item in items %}
+            <article
+                class="group bg-navy-800 rounded-xl overflow-hidden border border-white/5 hover:border-neon-pink/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(255,46,99,0.1)] flex flex-col h-full">
+                <!-- Image Section -->
+                <a href="{% url 'portfolio_detail' item.slug %}"
+                    class="block aspect-w-16 aspect-h-10 bg-navy-700 relative overflow-hidden">
+                    {% if item.cover_image %}
+                    <img src="{{ item.cover_image.url }}" alt="{{ item.title }}"
+                        class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500">
+                    {% else %}
+                    <div class="flex items-center justify-center w-full h-full text-gray-600 bg-navy-700">
+                        <svg class="w-12 h-12 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                                d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z">
+                            </path>
+                        </svg>
+                    </div>
+                    {% endif %}
+
+                    <!-- Hover Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                        <span
+                            class="text-white font-semibold tracking-wider uppercase text-sm border border-white px-4 py-2 rounded-full hover:bg-white hover:text-black transition-colors">
+                            View Project
+                        </span>
+                    </div>
+                </a>
+
+                <!-- Content Section -->
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="flex items-center justify-between mb-3 text-xs">
+                        <span
+                            class="px-2 py-1 rounded-md bg-navy-900 text-neon-blue font-medium uppercase tracking-wide border border-neon-blue/20">
+                            {{ item.get_category_display }}
+                        </span>
+                        <span class="text-gray-500">{{ item.created_at|date:"M d, Y" }}</span>
+                    </div>
+
+                    <h2 class="text-xl font-bold text-white mb-3 group-hover:text-neon-pink transition-colors">
+                        <a href="{% url 'portfolio_detail' item.slug %}">{{ item.title }}</a>
+                    </h2>
+
+                    <p class="text-gray-400 text-sm line-clamp-3 mb-6 flex-grow">
+                        {{ item.description }}
+                    </p>
+
+                    <div class="mt-auto pt-4 border-t border-white/5 flex items-center justify-between">
+                        <a href="{% url 'portfolio_detail' item.slug %}"
+                            class="text-sm font-medium text-white hover:text-neon-pink transition-colors flex items-center">
+                            Listen & Read
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </a>
+                        <!-- Play Icon Mini -->
+                        <div class="w-8 h-8 rounded-full bg-navy-700 flex items-center justify-center text-neon-pink">
+                            <svg class="w-4 h-4 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
