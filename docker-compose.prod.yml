@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: gunicorn basma_project.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./media:/app/media
+      - ./db.sqlite3:/app/db.sqlite3
+    expose:
+      - 8000
+    environment:
+      - DEBUG=0
+      - SECRET_KEY=django-insecure-prod-key-change-this-in-env
+      - ALLOWED_HOSTS=basma.mosama.me,localhost,127.0.0.1
+      - CSRF_TRUSTED_ORIGINS=https://basma.mosama.me
+    restart: always
