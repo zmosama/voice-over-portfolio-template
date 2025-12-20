@@ -1,5 +1,6 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
+{% load category_colors %}
 
 {% block content %}
 <div class="bg-navy-900 min-h-screen pt-12 pb-24 relative overflow-hidden">
@@ -51,7 +52,7 @@
                 <div class="p-6 flex flex-col flex-grow">
                     <div class="flex items-center justify-between mb-3 text-xs">
                         <span
-                            class="px-2 py-1 rounded-md bg-navy-900 text-neon-blue font-medium uppercase tracking-wide border border-neon-blue/20">
+                            class="px-2 py-1 rounded-md {{ item.category|category_bg }} {{ item.category|category_color }} font-medium uppercase tracking-wide border">
                             {{ item.get_category_display }}
                         </span>
                         <span class="text-gray-500">{{ item.created_at|date:"M d, Y" }}</span>

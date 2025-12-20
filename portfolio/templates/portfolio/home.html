@@ -1,9 +1,10 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
+{% load category_colors %}
 
 {% block content %}
 <!-- Hero Section -->
-<section class="relative h-[80vh] flex items-center justify-center overflow-hidden">
+<section class="relative h-[70vh] flex items-center justify-center overflow-hidden">
     <!-- Background Gradient/Effect -->
     <div class="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-900 z-0"></div>
     <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] z-0">
@@ -24,11 +25,7 @@
         <div class="mt-10 flex justify-center gap-4">
             <a href="#showcase"
                 class="px-8 py-4 bg-neon-pink text-white font-bold rounded-lg shadow-[0_0_20px_rgba(255,46,99,0.4)] hover:shadow-[0_0_30px_rgba(255,46,99,0.6)] hover:scale-105 transition-all duration-300">
-                Listen Now
-            </a>
-            <a href="{% url 'contact' %}"
-                class="px-8 py-4 border border-white/10 bg-white/5 text-white font-semibold rounded-lg hover:bg-white/10 transition-all backdrop-blur-sm">
-                Contact Me
+                Portfolio
             </a>
         </div>
     </div>
@@ -74,7 +71,7 @@
                 <!-- Content -->
                 <div class="p-6">
                     <div class="flex justify-between items-start mb-2">
-                        <span class="text-xs font-semibold text-neon-blue uppercase tracking-wider">{{ item.get_category_display }}</span>
+                        <span class="text-xs font-semibold {{ item.category|category_color }} uppercase tracking-wider">{{ item.get_category_display }}</span>
                         <span class="text-xs text-gray-500">{{ item.created_at|date:"M Y" }}</span>
                     </div>
                     <h3 class="text-xl font-bold text-white mb-2 group-hover:text-neon-pink transition-colors">{{ item.title }}</h3>
@@ -111,9 +108,9 @@
                     </p>
                 </div>
                 <div class="mt-10">
-                    <a href="{% url 'portfolio_list' %}"
+                    <a href="{% url 'contact' %}"
                         class="text-white border-b-2 border-neon-pink pb-1 hover:text-neon-pink transition-colors inline-flex items-center group">
-                        See Full Portfolio
+                        Contact Me
                         <svg class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

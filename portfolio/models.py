@@ -10,6 +10,7 @@ class Category(models.TextChoices):
     RADIO = 'radio', 'Radio'
     IVR = 'ivr', 'IVR'
     PODCAST = 'podcast', 'Podcast'
+    ELEARNING = 'elearning', 'E-Learning'
     OTHER = 'other', 'Other'
 
 class VoiceOver(models.Model):

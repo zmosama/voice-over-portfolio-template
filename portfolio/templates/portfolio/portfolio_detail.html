@@ -1,5 +1,6 @@
 {% extends 'portfolio/base.html' %}
 {% load static %}
+{% load category_colors %}
 
 {% block content %}
 <div class="bg-navy-900 min-h-screen py-16">
@@ -37,7 +38,7 @@
 
                 <div class="absolute bottom-0 left-0 right-0 p-8">
                     <span
-                        class="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-wider text-neon-blue uppercase bg-black/30 backdrop-blur-md rounded-full border border-neon-blue/20">
+                        class="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-wider {{ item.category|category_color }} uppercase backdrop-blur-md rounded-full border {{ item.category|category_bg }}">
                         {{ item.get_category_display }}
                     </span>
                     <h1 class="text-4xl md:text-5xl font-bold text-white mb-2">{{ item.title }}</h1>
@@ -57,7 +58,7 @@
                     </audio>
 
                     <!-- Custom Player UI -->
-                    <div class="flex items-start gap-4">
+                    <div class="flex items-center gap-6">
                         <button id="play-btn"
                             class="w-14 h-14 flex-shrink-0 bg-neon-pink rounded-full flex items-center justify-center text-white shadow-lg hover:scale-105 hover:bg-pink-500 transition-all">
                             <svg id="play-icon" class="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24">
@@ -68,22 +69,11 @@
                             </svg>
                         </button>
 
-                        <div class="flex-grow">
-                            <!-- Visualizer Placeholder (Static for now, implies functionality) -->
-                            <div class="h-12 flex items-center gap-1 opacity-50">
-                                <div class="w-1 h-3 bg-neon-blue rounded-full animate-pulse"></div>
-                                <div class="w-1 h-6 bg-neon-blue rounded-full animate-pulse delay-75"></div>
-                                <div class="w-1 h-4 bg-neon-blue rounded-full animate-pulse delay-100"></div>
-                                <div class="w-1 h-8 bg-neon-blue rounded-full animate-pulse delay-150"></div>
-                                <div class="w-1 h-5 bg-neon-blue rounded-full animate-pulse delay-200"></div>
-                                <div class="w-1 h-3 bg-neon-blue rounded-full animate-pulse delay-75"></div>
-                                <div class="w-1 h-6 bg-neon-blue rounded-full animate-pulse delay-100"></div>
-                                <div class="w-1 h-8 bg-neon-blue rounded-full animate-pulse delay-150"></div>
-                                <!-- More bars could be added purely for CSS visual effect -->
-                                <div class="w-full h-1 bg-gray-700 rounded-full ml-2 relative overflow-hidden">
-                                    <div id="progress-bar"
-                                        class="absolute top-0 left-0 h-full bg-neon-pink w-0 transition-all duration-100">
-                                    </div>
+                        <div class="flex-grow flex flex-col justify-center">
+                            <!-- Progress Bar -->
+                            <div id="progress-container" class="w-full h-2 bg-gray-700 rounded-full relative overflow-hidden cursor-pointer hover:h-3 transition-all">
+                                <div id="progress-bar"
+                                    class="absolute top-0 left-0 h-full bg-neon-pink w-0 transition-all duration-100">
                                 </div>
                             </div>
                             <div class="flex justify-between text-xs text-gray-500 mt-2 font-mono">
@@ -118,6 +108,7 @@
     const playIcon = document.getElementById('play-icon');
     const pauseIcon = document.getElementById('pause-icon');
     const progressBar = document.getElementById('progress-bar');
+    const progressContainer = document.getElementById('progress-container');
     const currentTimeEl = document.getElementById('current-time');
     const durationEl = document.getElementById('duration');
 
@@ -154,7 +145,31 @@
             progressBar.style.width = '0%';
         });
 
+        // Seek on Progress Bar Click
+        progressContainer.addEventListener('click', (e) => {
+            const rect = progressContainer.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const width = rect.width;
+            const percent = clickX / width;
+            const newTime = percent * audio.duration;
+
+            audio.currentTime = newTime;
+        });
+
+        // Show preview on hover (optional enhancement)
+        progressContainer.addEventListener('mousemove', (e) => {
+            const rect = progressContainer.getBoundingClientRect();
+            const hoverX = e.clientX - rect.left;
+            const width = rect.width;
+            const percent = hoverX / width;
+            const hoverTime = percent * audio.duration;
+
+            // You can add a tooltip here showing the time
+            progressContainer.title = formatTime(hoverTime);
+        });
+
         function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
             const min = Math.floor(seconds / 60);
             const sec = Math.floor(seconds % 60);
             return `${min}:${sec < 10 ? '0' : ''}${sec}`;

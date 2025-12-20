@@ -14,6 +14,6 @@ services:
     environment:
       - DEBUG=0
       - SECRET_KEY=django-insecure-prod-key-change-this-in-env
-      - ALLOWED_HOSTS=basma.mosama.me,localhost,127.0.0.1
+      - ALLOWED_HOSTS=basma.mosama.me,localhost,127.0.0.1,192.168.0.150
       - CSRF_TRUSTED_ORIGINS=https://basma.mosama.me
     restart: always

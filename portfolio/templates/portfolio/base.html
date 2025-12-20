@@ -6,6 +6,76 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basma | Voice Over Artist</title>
+
+    <!-- Meta Description -->
+    <meta name="description" content="Professional Voice Over Artist bringing scripts to life with precision and passion. Specializing in ADS, Narration, Documentary, Dubbing, Audio Books, Radio, IVR, and Podcasts.">
+    <meta name="keywords" content="voice over, voice artist, narrator, dubbing, arabic voice over, basma, صوت, تعليق صوتي">
+    <meta name="author" content="Basma">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://basma.mosama.me/">
+    <meta property="og:title" content="Basma | Professional Voice Over Artist">
+    <meta property="og:description" content="Professional Voice Over Artist bringing scripts to life with precision and passion. Explore my portfolio of ADS, Narration, Documentary, Dubbing, and more.">
+    <meta property="og:image" content="https://basma.mosama.me{% static 'portfolio/img/basma_studio.jpg' %}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="Basma Voice Over">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:locale:alternate" content="ar_AR">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://basma.mosama.me/">
+    <meta name="twitter:title" content="Basma | Professional Voice Over Artist">
+    <meta name="twitter:description" content="Professional Voice Over Artist bringing scripts to life with precision and passion.">
+    <meta name="twitter:image" content="https://basma.mosama.me{% static 'portfolio/img/basma_studio.jpg' %}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'portfolio/img/favicon.ico' %}">
+    <link rel="icon" type="image/png" href="{% static 'portfolio/img/favicon.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'portfolio/img/favicon.png' %}">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://basma.mosama.me{{ request.path }}">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Basma Yassin",
+        "url": "https://basma.mosama.me",
+        "image": "https://basma.mosama.me{% static 'portfolio/img/basma_studio.jpg' %}",
+        "jobTitle": "Voice Over Artist",
+        "description": "Professional Voice Over Artist bringing scripts to life with precision and passion",
+        "knowsAbout": ["Voice Over", "Narration", "Dubbing", "Audio Books", "Radio", "IVR", "Podcast", "Documentary", "Advertising"],
+        "sameAs": [
+            "https://www.instagram.com/basma.yassin/"
+        ],
+        "workExample": {
+            "@type": "CreativeWork",
+            "name": "Voice Over Portfolio",
+            "url": "https://basma.mosama.me/portfolio/"
+        }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "Basma Voice Over",
+        "url": "https://basma.mosama.me",
+        "description": "Professional Voice Over Artist Portfolio",
+        "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://basma.mosama.me/api/search/?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+        }
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link href="{% static 'portfolio/css/fonts.css' %}" rel="stylesheet">
@@ -66,6 +136,32 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
+
+        /* Spotlight Search Modal */
+        #search-modal {
+            transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+        }
+
+        #search-modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.95);
+        }
+
+        #search-modal:not(.hidden) {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .search-result-item {
+            transition: all 0.15s ease;
+        }
+
+        .search-result-item:hover,
+        .search-result-item.selected {
+            background: rgba(255, 46, 99, 0.1);
+            border-left: 3px solid #FF2E63;
+        }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -107,20 +203,49 @@
                         BASMA<span class="text-neon-pink">.</span>
                     </a>
                 </div>
+                <!-- Desktop Menu -->
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
+                    <div class="ml-10 flex items-center space-x-8">
                         <a href="{% url 'home' %}"
                             class="text-gray-300 hover:text-neon-pink px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
-                        <a href="{% url 'portfolio_list' %}"
-                            class="text-gray-300 hover:text-neon-pink px-3 py-2 rounded-md text-sm font-medium transition-colors">Portfolio</a>
                         <a href="{% url 'home' %}#about"
                             class="text-gray-300 hover:text-neon-pink px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
-                        <a href="{% url 'contact' %}"
+                        <a href="{% url 'portfolio_list' %}"
                             class="bg-neon-pink/10 border border-neon-pink/50 text-neon-pink hover:bg-neon-pink hover:text-white px-4 py-2 rounded-full text-sm font-medium transition-all">
-                            Contact Me
+                            Portfolio
                         </a>
+                        <!-- Search Button -->
+                        <button id="search-btn" class="text-gray-300 hover:text-neon-pink transition-colors p-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                            </svg>
+                        </button>
                     </div>
                 </div>
+                <!-- Mobile Actions -->
+                <div class="md:hidden flex items-center space-x-2">
+                    <!-- Mobile Search Button -->
+                    <button id="mobile-search-btn" class="text-gray-300 hover:text-neon-pink transition-colors p-2 flex items-center justify-center">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                    <!-- Mobile Menu Button -->
+                    <button id="mobile-menu-button" type="button" class="text-gray-300 hover:text-neon-pink focus:outline-none focus:text-neon-pink transition-colors p-2 flex items-center justify-center">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path id="menu-icon" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            <path id="close-icon" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-t border-white/5">
+            <div class="px-2 pt-2 pb-3 space-y-1 bg-navy-800/95 backdrop-blur-lg">
+                <a href="{% url 'home' %}" class="text-gray-300 hover:text-neon-pink hover:bg-navy-700 block px-3 py-2 rounded-md text-base font-medium transition-colors">Home</a>
+                <a href="{% url 'home' %}#about" class="text-gray-300 hover:text-neon-pink hover:bg-navy-700 block px-3 py-2 rounded-md text-base font-medium transition-colors">About</a>
+                <a href="{% url 'portfolio_list' %}" class="text-neon-pink hover:bg-neon-pink/10 block px-3 py-2 rounded-md text-base font-medium border border-neon-pink/50 transition-all">Portfolio</a>
             </div>
         </div>
     </nav>
@@ -129,6 +254,71 @@
     <main class="flex-grow pt-20">
         {% block content %}{% endblock %}
     </main>
+
+    <!-- Spotlight Search Modal -->
+    <div id="search-modal" class="hidden fixed inset-0 z-[100] flex items-start justify-center pt-32 px-4">
+        <!-- Backdrop -->
+        <div id="search-backdrop" class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+
+        <!-- Modal Content -->
+        <div class="relative w-full max-w-2xl glass-panel rounded-2xl shadow-2xl overflow-hidden">
+            <!-- Search Input -->
+            <div class="flex items-center px-6 py-4 border-b border-white/10">
+                <svg class="w-6 h-6 text-gray-400 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                </svg>
+                <input
+                    type="text"
+                    id="search-input"
+                    placeholder="Search projects, categories..."
+                    class="flex-1 bg-transparent text-white text-lg placeholder-gray-500 outline-none"
+                    autocomplete="off"
+                />
+                <kbd class="hidden sm:inline-block px-2 py-1 text-xs text-gray-400 bg-navy-700 rounded border border-white/10">ESC</kbd>
+            </div>
+
+            <!-- Search Results -->
+            <div id="search-results" class="max-h-96 overflow-y-auto">
+                <!-- Loading State -->
+                <div id="search-loading" class="hidden px-6 py-8 text-center">
+                    <div class="inline-block w-6 h-6 border-2 border-neon-pink border-t-transparent rounded-full animate-spin"></div>
+                    <p class="mt-2 text-gray-400 text-sm">Searching...</p>
+                </div>
+
+                <!-- Empty State -->
+                <div id="search-empty" class="px-6 py-12 text-center text-gray-500">
+                    <svg class="w-16 h-16 mx-auto mb-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <p class="text-sm">Type to search projects...</p>
+                </div>
+
+                <!-- No Results -->
+                <div id="search-no-results" class="hidden px-6 py-12 text-center text-gray-500">
+                    <svg class="w-16 h-16 mx-auto mb-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <p class="text-sm">No results found</p>
+                </div>
+
+                <!-- Results Container -->
+                <div id="search-results-list" class="py-2"></div>
+            </div>
+
+            <!-- Footer Hint -->
+            <div class="hidden sm:flex items-center justify-between px-6 py-3 border-t border-white/10 bg-navy-900/50 text-xs text-gray-500">
+                <div class="flex items-center space-x-4">
+                    <span class="flex items-center">
+                        <kbd class="px-2 py-1 bg-navy-700 rounded border border-white/10 mr-1">↑↓</kbd> Navigate
+                    </span>
+                    <span class="flex items-center">
+                        <kbd class="px-2 py-1 bg-navy-700 rounded border border-white/10 mr-1">Enter</kbd> Select
+                    </span>
+                </div>
+                <span>⌘K to search</span>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-navy-800 border-t border-white/5 mt-auto">
@@ -146,9 +336,9 @@
                     <ul class="space-y-2">
                         <li><a href="{% url 'home' %}"
                                 class="text-gray-400 hover:text-neon-pink text-sm transition-colors">Home</a></li>
-                        <li><a href="#"
+                        <li><a href="{% url 'portfolio_list' %}"
                                 class="text-gray-400 hover:text-neon-pink text-sm transition-colors">Portfolio</a></li>
-                        <li><a href="#about" class="text-gray-400 hover:text-neon-pink text-sm transition-colors">About
+                        <li><a href="{% url 'home' %}#about" class="text-gray-400 hover:text-neon-pink text-sm transition-colors">About
                                 Me</a></li>
                     </ul>
                 </div>
@@ -168,15 +358,238 @@
                     </div>
                 </div>
             </div>
-            <div class="mt-8 border-t border-white/5 pt-8 flex justify-between items-center text-xs text-gray-500">
-                <p>&copy; 2024 Basma. All rights reserved.</p>
-                <div class="flex space-x-4">
-                    <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
-                    <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+            <div class="mt-8 border-t border-white/5 pt-8 text-xs text-gray-500">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <p>&copy; 2024 Basma. All rights reserved.</p>
+                        <p class="mt-2">
+                            Developed with <span class="text-neon-pink">♥</span> by
+                            <a href="https://mosama.me" target="_blank" rel="noopener noreferrer" class="text-neon-pink hover:text-neon-blue transition-colors font-medium">
+                                mosama
+                            </a>
+                        </p>
+                    </div>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                        <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                    </div>
                 </div>
             </div>
         </div>
     </footer>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', () => {
+                    const isHidden = mobileMenu.classList.contains('hidden');
+
+                    if (isHidden) {
+                        mobileMenu.classList.remove('hidden');
+                        menuIcon.classList.add('hidden');
+                        closeIcon.classList.remove('hidden');
+                    } else {
+                        mobileMenu.classList.add('hidden');
+                        menuIcon.classList.remove('hidden');
+                        closeIcon.classList.add('hidden');
+                    }
+                });
+
+                // Close mobile menu when clicking on a link
+                const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+                mobileMenuLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.add('hidden');
+                        menuIcon.classList.remove('hidden');
+                        closeIcon.classList.add('hidden');
+                    });
+                });
+            }
+        });
+    </script>
+
+    <!-- Spotlight Search Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchModal = document.getElementById('search-modal');
+            const searchInput = document.getElementById('search-input');
+            const searchBtn = document.getElementById('search-btn');
+            const mobileSearchBtn = document.getElementById('mobile-search-btn');
+            const searchBackdrop = document.getElementById('search-backdrop');
+            const searchResultsList = document.getElementById('search-results-list');
+            const searchLoading = document.getElementById('search-loading');
+            const searchEmpty = document.getElementById('search-empty');
+            const searchNoResults = document.getElementById('search-no-results');
+
+            let selectedIndex = -1;
+            let searchTimeout = null;
+
+            // Open search modal
+            const openSearch = () => {
+                searchModal.classList.remove('hidden');
+                setTimeout(() => searchInput.focus(), 100);
+                document.body.style.overflow = 'hidden';
+            };
+
+            // Close search modal
+            const closeSearch = () => {
+                searchModal.classList.add('hidden');
+                searchInput.value = '';
+                searchResultsList.innerHTML = '';
+                searchEmpty.classList.remove('hidden');
+                searchNoResults.classList.add('hidden');
+                selectedIndex = -1;
+                document.body.style.overflow = '';
+            };
+
+            // Event listeners for opening search
+            searchBtn?.addEventListener('click', openSearch);
+            mobileSearchBtn?.addEventListener('click', openSearch);
+            searchBackdrop?.addEventListener('click', closeSearch);
+
+            // Keyboard shortcuts
+            document.addEventListener('keydown', (e) => {
+                // Cmd/Ctrl + K to open search
+                if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                    e.preventDefault();
+                    openSearch();
+                }
+
+                // ESC to close search
+                if (e.key === 'Escape' && !searchModal.classList.contains('hidden')) {
+                    closeSearch();
+                }
+
+                // Arrow navigation
+                if (!searchModal.classList.contains('hidden')) {
+                    const items = searchResultsList.querySelectorAll('.search-result-item');
+
+                    if (e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        selectedIndex = Math.min(selectedIndex + 1, items.length - 1);
+                        updateSelection(items);
+                    } else if (e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        selectedIndex = Math.max(selectedIndex - 1, -1);
+                        updateSelection(items);
+                    } else if (e.key === 'Enter' && selectedIndex >= 0) {
+                        e.preventDefault();
+                        items[selectedIndex]?.click();
+                    }
+                }
+            });
+
+            // Update selected item
+            const updateSelection = (items) => {
+                items.forEach((item, index) => {
+                    if (index === selectedIndex) {
+                        item.classList.add('selected');
+                        item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                    } else {
+                        item.classList.remove('selected');
+                    }
+                });
+            };
+
+            // Search function with debouncing
+            searchInput?.addEventListener('input', (e) => {
+                const query = e.target.value.trim();
+
+                clearTimeout(searchTimeout);
+
+                if (query.length === 0) {
+                    searchResultsList.innerHTML = '';
+                    searchEmpty.classList.remove('hidden');
+                    searchNoResults.classList.add('hidden');
+                    searchLoading.classList.add('hidden');
+                    return;
+                }
+
+                searchEmpty.classList.add('hidden');
+                searchLoading.classList.remove('hidden');
+                searchNoResults.classList.add('hidden');
+                selectedIndex = -1;
+
+                searchTimeout = setTimeout(() => {
+                    fetch(`/api/search/?q=${encodeURIComponent(query)}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            searchLoading.classList.add('hidden');
+
+                            if (data.results && data.results.length > 0) {
+                                renderResults(data.results);
+                                searchNoResults.classList.add('hidden');
+                            } else {
+                                searchResultsList.innerHTML = '';
+                                searchNoResults.classList.remove('hidden');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Search error:', error);
+                            searchLoading.classList.add('hidden');
+                            searchNoResults.classList.remove('hidden');
+                        });
+                }, 300); // 300ms debounce
+            });
+
+            // Render search results
+            const renderResults = (results) => {
+                searchResultsList.innerHTML = results.map((item, index) => `
+                    <a href="${item.url}" class="search-result-item block px-6 py-5 hover:bg-neon-pink/10 border-l-3 border-transparent cursor-pointer">
+                        <div class="flex items-start gap-5">
+                            ${item.cover_image ? `
+                                <img src="${item.cover_image}" alt="${item.title}" class="w-20 h-20 rounded-xl object-cover flex-shrink-0 shadow-lg">
+                            ` : `
+                                <div class="w-20 h-20 rounded-xl bg-navy-700 flex items-center justify-center flex-shrink-0 shadow-lg">
+                                    <svg class="w-10 h-10 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path>
+                                    </svg>
+                                </div>
+                            `}
+                            <div class="flex-1 min-w-0 py-1">
+                                <h3 class="text-white font-semibold text-base mb-2 truncate">${item.title}</h3>
+                                <p class="text-sm text-gray-400 leading-relaxed line-clamp-2 mb-3">${item.description}</p>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-xs px-2.5 py-1 rounded-full font-medium ${getCategoryColorClass(item.category)}">${item.category_display}</span>
+                                    <span class="text-xs text-gray-500">${item.date}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                `).join('');
+
+                // Add click event to close modal on selection
+                searchResultsList.querySelectorAll('.search-result-item').forEach((item, index) => {
+                    item.addEventListener('mouseenter', () => {
+                        selectedIndex = index;
+                        updateSelection(searchResultsList.querySelectorAll('.search-result-item'));
+                    });
+                });
+            };
+
+            // Category color mapping
+            const getCategoryColorClass = (category) => {
+                const colors = {
+                    'ads': 'bg-red-500/20 text-red-400',
+                    'narration': 'bg-blue-500/20 text-blue-400',
+                    'documentary': 'bg-green-500/20 text-green-400',
+                    'dubbing': 'bg-purple-500/20 text-purple-400',
+                    'books': 'bg-yellow-500/20 text-yellow-400',
+                    'radio': 'bg-pink-500/20 text-pink-400',
+                    'ivr': 'bg-cyan-500/20 text-cyan-400',
+                    'podcast': 'bg-orange-500/20 text-orange-400',
+                    'elearning': 'bg-teal-500/20 text-teal-400'
+                };
+                return colors[category] || 'bg-gray-500/20 text-gray-400';
+            };
+        });
+    </script>
 
 </body>
 
