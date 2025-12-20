@@ -21,3 +21,12 @@ class VoiceOverAdmin(ModelAdmin):
     list_filter = ('category', 'is_featured')
     search_fields = ('title', 'description')
     prepopulated_fields = {'slug': ('title',)}
+
+from .models import ContactMessage
+
+@admin.register(ContactMessage)
+class ContactMessageAdmin(ModelAdmin):
+    list_display = ('name', 'email', 'subject', 'created_at', 'is_read')
+    list_filter = ('is_read', 'created_at')
+    readonly_fields = ('message',)
+    search_fields = ('name', 'email', 'subject')
